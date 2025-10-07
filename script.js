@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // !! IMPORTANTE !! VAMOS TROCAR ESSA URL NO PASSO FINAL
-    const backendUrl = 'URL_DO_SEU_BACKEND_AQUI'; 
+    const backendUrl = 'https://rifa-backend-o7sm.onrender.com'; 
 
     const numeroInicial = 111;
     const numeroFinal = 120;
