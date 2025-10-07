@@ -34,8 +34,30 @@
 
                 <button type="submit" class="btn-comprar">Ir para Pagamento</button>
             </form>
+       </div>
+</div>
+
+<div id="modal-pix" class="modal">
+    <div class="modal-content pix-modal">
+        <span class="close-button pix-close">&times;</span>
+        <h2>Pagamento via PIX</h2>
+        <p>Seu número foi reservado! Conclua o pagamento para garantir sua participação.</p>
+        
+        <img src="pix-qrcode.png" alt="QR Code PIX para pagamento" class="pix-qrcode-img">
+        
+        <div class="pix-key-wrapper">
+            <p>Ou use a chave PIX (Copia e Cola):</p>
+            <input type="text" value="SUA-CHAVE-PIX-AQUI" id="pix-key-input" readonly>
+            <button id="copy-pix-key">Copiar Chave</button>
+        </div>
+
+        <div class="pix-instructions">
+            <strong>IMPORTANTE:</strong> Após o pagamento, envie o comprovante para o nosso WhatsApp para confirmar sua participação!
+            <br>
+            <a href="https://wa.me/5599991573895" target="_blank" class="whatsapp-button">Enviar Comprovante por WhatsApp</a>
         </div>
     </div>
+</div>
 
     <script src="script.js"></script>
 </body>
