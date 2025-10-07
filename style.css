@@ -165,3 +165,64 @@ h1 {
 .btn-comprar:hover {
     background-color: #0056b3;
 }
+/* Estilos adicionais para o Modal PIX */
+.pix-modal {
+    text-align: center;
+}
+
+.pix-qrcode-img {
+    max-width: 250px;
+    width: 80%;
+    margin: 15px auto;
+    display: block;
+}
+
+.pix-key-wrapper {
+    margin: 20px 0;
+}
+
+#pix-key-input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 0.9em;
+    background-color: #f4f4f4;
+}
+
+#copy-pix-key {
+    background-color: var(--dark-blue);
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.2s;
+}
+
+#copy-pix-key:hover {
+    background-color: #0056b3;
+}
+
+.pix-instructions {
+    margin-top: 25px;
+    background-color: #fffde7;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #fff59d;
+}
+
+.whatsapp-button {
+    display: inline-block;
+    background-color: #25D366;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+}
