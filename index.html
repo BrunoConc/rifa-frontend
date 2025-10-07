@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rifa - Tenda da Misericórdia</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <img src="image.png" alt="Rifa Cesta de Chocolates Cacau Show" class="flyer-image">
+        <h1>Cesta de Chocolates Cacau Show</h1>
+        <p class="draw-date">O sorteio ocorrerá dia <strong>18/11</strong></p>
+        <p class="price">Apenas R$ 10,00 por número</p>
+
+        <div id="rifa-numeros" class="numeros-container">
+            </div>
+    </div>
+
+    <div id="modal-compra" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Comprar Número <span id="numero-selecionado"></span></h2>
+            <p>Preencha seus dados para continuar com o pagamento.</p>
+            <form id="form-comprador">
+                <label for="nome">Nome Completo:</label>
+                <input type="text" id="nome" name="nome" required>
+
+                <label for="telefone">Telefone (com DDD):</label>
+                <input type="tel" id="telefone" name="telefone" placeholder="Ex: (91) 98888-7777" required>
+                
+                <label for="endereco">Endereço (Rua, Número, Bairro):</label>
+                <input type="text" id="endereco" name="endereco" required>
+
+                <button type="submit" class="btn-comprar">Ir para Pagamento</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
