@@ -1,32 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // !! IMPORTANTE !! VAMOS TROCAR ESSA URL NO PASSO FINAL
-    const backendUrl = 'https://rifa-backend-o7sm.onrender.com'; 
-
+    // --- CONFIGURAÇÕES ---
+    const backendUrl = 'https://rifa-backend-o7sm.onrender.com'; // <-- SUA URL REAL DO RENDER AQUI
     const numeroInicial = 111;
     const numeroFinal = 120;
-    const urlGatewayPagamento = "https://www.mercadopago.com.br/seu-link-de-pagamento";
-
-    // ... (cole o resto do script.js da versão com fetch, ele não muda)
+    
+    // --- ELEMENTOS DA PÁGINA ---
     const containerNumeros = document.getElementById('rifa-numeros');
-    const modal = document.getElementById('modal-compra');
+    const modalCompra = document.getElementById('modal-compra');
     const spanNumeroSelecionado = document.getElementById('numero-selecionado');
     const formComprador = document.getElementById('form-comprador');
     const closeModalButton = document.querySelector('.close-button');
 
+    // --- NOVOS ELEMENTOS DO MODAL PIX ---
+    const modalPix = document.getElementById('modal-pix');
+    const closePixModalButton = document.querySelector('.pix-close');
+    const copyPixKeyButton = document.getElementById('copy-pix-key');
+    const pixKeyInput = document.getElementById('pix-key-input');
+
     async function gerarNumeros() {
+        // ... (Esta função continua exatamente a mesma de antes)
         containerNumeros.innerHTML = 'Carregando números...';
         try {
             const response = await fetch(`${backendUrl}/api/rifa`);
             if (!response.ok) { throw new Error('Não foi possível carregar os dados da rifa.'); }
             const numerosVendidos = await response.json();
             containerNumeros.innerHTML = '';
-
             for (let i = numeroInicial; i <= numeroFinal; i++) {
                 const numeroBtn = document.createElement('button');
                 numeroBtn.textContent = i;
                 numeroBtn.classList.add('numero-btn');
                 numeroBtn.dataset.numero = i;
-
                 if (numerosVendidos.includes(i.toString())) {
                     numeroBtn.classList.add('indisponivel');
                     numeroBtn.disabled = true;
@@ -44,14 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function selecionarNumero(numero) {
         spanNumeroSelecionado.textContent = numero;
-        modal.style.display = 'block';
+        modalCompra.style.display = 'block';
     }
 
-    function fecharModal() {
-        modal.style.display = 'none';
-        formComprador.reset();
-    }
-
+    // --- A GRANDE MUDANÇA ESTÁ AQUI ---
     formComprador.addEventListener('submit', async function(event) {
         event.preventDefault();
         const numeroComprado = spanNumeroSelecionado.textContent;
@@ -68,29 +67,57 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dadosCompra),
             });
-
             const result = await response.json();
-            if (!response.ok) { throw new Error(result.message || 'Ocorreu um erro na compra.'); }
-
+            if (!response.ok) { throw new Error(result.message || 'Ocorreu um erro na reserva.'); }
+            
+            // Se a reserva foi um sucesso no backend:
+            // 1. Atualiza a aparência do botão na tela
             const btnComprado = document.querySelector(`.numero-btn[data-numero='${numeroComprado}']`);
             if (btnComprado) {
                 btnComprado.classList.remove('disponivel');
                 btnComprado.classList.add('indisponivel');
                 btnComprado.disabled = true;
             }
-            fecharModal();
-            alert(`Obrigado, ${dadosCompra.nome}! Sua reserva do número ${numeroComprado} foi feita. Redirecionando para o pagamento.`);
-            window.location.href = urlGatewayPagamento;
+            
+            // 2. Fecha o modal de formulário
+            modalCompra.style.display = 'none';
+            formComprador.reset();
+            
+            // 3. ABRE O NOVO MODAL DE PAGAMENTO PIX
+            modalPix.style.display = 'block';
 
         } catch (error) {
             alert(`Erro: ${error.message}`);
-            console.error('Erro ao registrar compra:', error);
+            console.error('Erro ao registrar reserva:', error);
         }
     });
 
-    closeModalButton.addEventListener('click', fecharModal);
+    // --- FUNÇÕES PARA OS MODAIS ---
+    function fecharModalCompra() {
+        modalCompra.style.display = 'none';
+        formComprador.reset();
+    }
+    
+    function fecharModalPix() {
+        modalPix.style.display = 'none';
+    }
+    
+    closeModalButton.addEventListener('click', fecharModalCompra);
+    closePixModalButton.addEventListener('click', fecharModalPix);
+
     window.addEventListener('click', (event) => {
-        if (event.target == modal) { fecharModal(); }
+        if (event.target == modalCompra) { fecharModalCompra(); }
+        if (event.target == modalPix) { fecharModalPix(); }
+    });
+    
+    // Função para copiar a chave PIX
+    copyPixKeyButton.addEventListener('click', () => {
+        pixKeyInput.select();
+        document.execCommand('copy');
+        copyPixKeyButton.textContent = 'Copiado!';
+        setTimeout(() => {
+            copyPixKeyButton.textContent = 'Copiar Chave';
+        }, 2000);
     });
 
     gerarNumeros();
